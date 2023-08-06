@@ -15,6 +15,6 @@ class CustomClient(Client):
         """Gets triggered on startup"""
 
         self.logger.info(f"{os.getenv('PROJECT_NAME')} - Startup Finished!")
-        self.logger.info(
-            "Note: Discord needs up to an hour to load your global commands / context menus. They may not appear immediately\n"
-        )
+        # self.logger.info(
+        #     "Note: Discord needs up to an hour to load your global commands / context menus. They may not appear immediately\n"
+        # )
