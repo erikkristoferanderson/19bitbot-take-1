@@ -9,6 +9,7 @@ python = "^3.10"
 python-dotenv = "^1.0.0"
 orjson = "^3.6.7"
 discord-py-interactions= "^5.8.0"
+pre-commit = "^3.3.3"
 
 [tool.poetry.dev-dependencies]
 
