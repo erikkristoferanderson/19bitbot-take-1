@@ -1,7 +1,7 @@
 import logging
 import os
 from core.base import CustomClient
-
+import asyncio
 import logging
 
 ALLOWED_ROLE_NAMES_FOR_BOT_TO_ADD = ["new-role"]
@@ -24,6 +24,8 @@ from interactions import (
     SlashContext,
     SlashCommandChoice,
     listen,
+    Message,
+    MessageInteraction,
 )
 from interactions.api.events import Component, ModalCompletion
 from interactions import ModalContext
@@ -37,6 +39,54 @@ guild_id = os.getenv("TEST_SERVER_ID")
 
 class CommandExtension(Extension):
     bot: CustomClient
+
+    @slash_command(name="create-role-emoji-message", scopes=[guild_id])
+    @slash_option(
+        name="role_name",
+        description="Role Name",
+        required=True,
+        opt_type=OptionType.STRING,
+        min_length=1,
+        max_length=50,
+    )
+    @slash_option(
+        name="emoji",
+        description="Emoji",
+        required=True,
+        opt_type=OptionType.STRING
+    )
+    async def create_role_emoji_message(self, ctx: SlashContext, role_name: str, emoji: str):
+        selected_role = None
+        for role in ctx.guild.roles:
+            if role.name == role_name:
+                selected_role = role
+        message_content = f'React with {emoji} to gain role {role_name}.'
+        await ctx.send(message_content)
+        await ctx.channel.fetch_messages()
+        last_message_id = ctx.channel.last_message_id
+        role_emoji_message = ctx.channel.get_message(last_message_id)
+        await role_emoji_message.add_reaction(emoji)
+
+        #
+        # await asyncio.sleep(3)
+        # await ctx.channel.fetch_messages()
+        # received_message_content = None
+        # while received_message_content != message_content:
+        #     await ctx.defer()
+        #     await asyncio.sleep(1)
+        #     await ctx.channel.fetch_messages()
+        #     last_message_id = ctx.channel.last_message_id
+        #     received_message_content = ctx.channel.get_message(last_message_id).content
+        # role_emoji_message = ctx.channel.get_message(last_message_id)
+        #
+        #
+        # await role_emoji_message.add_reaction(emoji)
+        print('testing')
+
+
+
+
+
 
     @slash_command(name="add-role", scopes=[guild_id])
     @slash_option(
