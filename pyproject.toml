@@ -5,7 +5,7 @@ description = "A discord bot made with interactions.py."
 authors = ["Your Name <you@example.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.10"
 python-dotenv = "^1.0.0"
 orjson = "^3.6.7"
 discord-py-interactions= "^5.8.0"
